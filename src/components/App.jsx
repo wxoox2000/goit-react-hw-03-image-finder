@@ -23,6 +23,7 @@ export class App extends Component {
     failed: false,
     loading: false,
     modalImg: null,
+    closing: false,
   };
   async componentDidMount() {
     try {
@@ -52,7 +53,8 @@ export class App extends Component {
     this.setState({ modalImg: url });
   };
   closeModal = () => {
-    this.setState({ modalImg: null });
+    this.setState({ closing: true })
+    setTimeout(() => this.setState({ modalImg: null, closing: false }), 500);
   };
   async componentDidUpdate(prevProps, prevState) {
     if (
@@ -85,7 +87,9 @@ export class App extends Component {
           />
         )}
         {this.state.loading && <Spinner />}
-        {this.state.modalImg ? <ModalImage closeModal={this.closeModal} url={this.state.modalImg} /> : null}
+        {this.state.modalImg ? (
+          <ModalImage closeModal={this.closeModal} closing={this.state.closing} url={this.state.modalImg} />
+        ) : null}
         {this.state.queryResult.length > 0 || !this.state.failed ? (
           <Button loadMore={this.loadMore} />
         ) : null}

@@ -23,8 +23,8 @@ export class ModalImage extends Component {
   };
   render() {
     return (
-      <Overlay onClick={this.BackdropClose}>
-        <Modal>
+      <Overlay onClick={this.BackdropClose} closing={this.props.closing}>
+        <Modal closing={this.props.closing}>
           <img src={this.props.url} alt="" width={800} />
         </Modal>
       </Overlay>
